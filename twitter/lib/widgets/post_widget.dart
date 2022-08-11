@@ -62,18 +62,6 @@ class PostWidget extends StatelessWidget {
               ),
             ),
           ),
-
-          Container(
-            width: (MediaQuery.of(context).size.width) * 0.35,
-            margin: const EdgeInsets.fromLTRB(0, 5, 5, 5),
-            alignment: AlignmentDirectional.topEnd,
-            child:
-            const Icon(
-              Icons.more_horiz_outlined,
-              size: 15,
-              color: Colors.black,
-            ),
-          ),
         ],
       ),
       subtitle: Column(
@@ -87,7 +75,6 @@ class PostWidget extends StatelessWidget {
             ),
           ),
           Row(
-
             children: [
               Container(
                 margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
@@ -127,7 +114,7 @@ class PostWidget extends StatelessWidget {
                   ),
               ),
               Container(
-                width: 175,
+                width: 150,
                 margin: const EdgeInsets.fromLTRB(0, 5, 5, 5),
                 child:
                   const Text('2'),
@@ -140,84 +127,22 @@ class PostWidget extends StatelessWidget {
                   size: 18                                                           ,
                   color: Colors.grey.shade400,
                 ),
-                //height: 10,
               ),
             ],
           )
         ],
       ),
+      trailing: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          Icon(
+            Icons.more_horiz_outlined,
+            size: 20,
+            color: Colors.black,
+          ),
+        ],
+      ),
     );
-
-    // return Container(
-    //   height: 200,
-    //   child: Row(
-    //     children: [
-    //       Align(
-    //         alignment: Alignment.topRight,
-    //         child: CircleAvatar(
-    //           radius: 20,
-    //           backgroundImage: NetworkImage(imgUrl),
-    //         ),
-    //       ),
-    //       // ignore: prefer_const_constructors
-    //       SizedBox(
-    //         width: 10,
-    //       ),
-    //       Column(
-    //         children: [
-    //           Row(
-    //             mainAxisAlignment: MainAxisAlignment.start,
-    //             children: [
-    //               Text(
-    //                 name,
-    //                 style: GoogleFonts.mulish(
-    //                     fontSize: 12,
-    //                     fontWeight: FontWeight.bold,
-    //                     color: Colors.black),
-    //               ),
-    //               SizedBox(
-    //                 width: 10,
-    //               ),
-    //               Text(
-    //                 username,
-    //                 style: GoogleFonts.mulish(
-    //                     fontSize: 12,
-    //                     fontWeight: FontWeight.w800,
-    //                     color: Colors.grey.shade400),
-    //               ),
-    //               SizedBox(
-    //                 width: 100,
-    //               ),
-    //               IconButton(
-    //                   onPressed: () {}, icon: const Icon(Icons.arrow_drop_down))
-    //             ],
-    //           ),
-    //           Expanded(
-    //             child: SizedBox(
-    //               width: 300,
-    //               height: 300,
-    //               child: Text(post),
-    //             ),
-    //           ),
-    //           Row(
-    //             children: [
-    //               Text(
-    //                 "#$tag",
-    //                 style: GoogleFonts.mulish(
-    //                   fontSize: 12,
-    //                   color: Colors.blue,
-    //                 ),
-    //               ),
-    //               // ignore: prefer_const_constructors
-    //               SizedBox(
-    //                 width: 210,
-    //               )
-    //             ],
-    //           ),
-    //         ],
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 }
