@@ -4,6 +4,8 @@ import 'package:twitter/screens/home_screen.dart';
 import 'package:twitter/screens/signup_screen.dart';
 import 'package:twitter/widgets/entry_field.dart';
 import 'package:twitter/widgets/flat_button.dart';
+import 'package:twitter/widgets/bottom_bar_menu.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -34,8 +36,7 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-
+      backgroundColor: const Color.fromARGB(255, 247, 246, 246),
       body: Column(
         children: [
           Container(
@@ -51,8 +52,7 @@ class _SignInState extends State<SignIn> {
           Container(
             height: 70,
             margin: const EdgeInsets.only(top: 10, bottom: 10),
-            child: Image.network('http://assets.stickpng.com/images/580b57fcd9996e24bc43c53e.png',
-            ),
+            child: Image.asset('assets/images/twitter_logo.png'),
           ),
           CustomEntryField(
             hint: 'Enter email',
@@ -70,7 +70,7 @@ class _SignInState extends State<SignIn> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  MaterialPageRoute(builder: (context) => const BottomMenuBar()),
                 );
               },
             ),

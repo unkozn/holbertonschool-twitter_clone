@@ -39,7 +39,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 247, 246, 246),
       appBar: AppBar(
         leading: BackButton(
           color: Colors.blue,
@@ -48,7 +48,7 @@ class _SignUpState extends State<SignUp> {
           }),
         ),
         elevation: 0.0,
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 247, 246, 246),
         centerTitle: true,
         title: const Text(
           "Sign up",
@@ -61,7 +61,7 @@ class _SignUpState extends State<SignUp> {
             Container(
               height: 75,
               margin: const EdgeInsets.all(20),
-              child: Image.network('http://assets.stickpng.com/images/580b57fcd9996e24bc43c53e.png'),
+              child: Image.asset('assets/images/twitter_logo.png'),
             ),
             CustomEntryField(hint: 'Enter name', controller: _nameController, isPassword: false),
             CustomEntryField(hint: 'Enter email', controller: _emailController, isPassword: false),

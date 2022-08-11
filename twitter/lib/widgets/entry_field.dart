@@ -15,7 +15,7 @@ class CustomEntryField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(18),
+      margin: const EdgeInsets.all(15),
       child: TextField(
         controller: controller,
         obscureText: isPassword,
@@ -30,7 +30,7 @@ class CustomEntryField extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
             ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey.shade200),
+              borderSide: const BorderSide(color: Colors.blue),
               borderRadius: BorderRadius.circular(30),
             ),
         ),

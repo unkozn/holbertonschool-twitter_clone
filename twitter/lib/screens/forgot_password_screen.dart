@@ -27,7 +27,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 247, 246, 246),
       appBar: AppBar(
         leading: BackButton(
           color: Colors.blue,
@@ -36,7 +36,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           }),
         ),
         elevation: 0.0,
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 247, 246, 246),
         centerTitle: true,
         title: const Text(
           'Forget password',
@@ -70,7 +70,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 style: TextStyle(
                   color: Colors.grey.shade500,
                   fontSize: 16,
-                  backgroundColor: Colors.white,
+                  backgroundColor: const Color.fromARGB(255, 247, 246, 246),
                 ),
               ),
             ),
