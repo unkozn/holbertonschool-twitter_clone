@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:twitter/screens/forgot_password_screen.dart';
-import 'package:twitter/screens/home_screen.dart';
 import 'package:twitter/screens/signup_screen.dart';
 import 'package:twitter/widgets/entry_field.dart';
 import 'package:twitter/widgets/flat_button.dart';
 import 'package:twitter/widgets/bottom_bar_menu.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../providers/auth_state.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -67,12 +68,7 @@ class _SignInState extends State<SignIn> {
           Center(
             child: CustomFlatButton(
               label: "Submit",
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const BottomMenuBar()),
-                );
-              },
+              onPressed: signInUser,
             ),
           ),
           const SizedBox(
@@ -113,5 +109,45 @@ class _SignInState extends State<SignIn> {
         ],
       ),
     );
+  }
+
+  signInUser() async {
+    final ifSignIn = await Auth().attemptLogin(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim()
+    );
+
+    if (ifSignIn == Errors.none) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const BottomMenuBar()),
+      );
+    } else {
+      String errorMsg = '';
+      switch (ifSignIn) {
+        case Errors.noUserError:
+          errorMsg = 'No user found for that email!';
+          break;
+        case Errors.wrongError:
+          errorMsg = 'Wrong password!';
+          break;
+        case Errors.error:
+          errorMsg = 'Failed to Login! Please try later';
+          break;
+        default:
+          errorMsg = 'Unknown error';
+      }
+      final snackBar = SnackBar(
+        content: Text(errorMsg),
+        backgroundColor: Colors.red,
+        action: SnackBarAction(
+          label: '',
+          onPressed: () {
+            // Some code to undo the change.
+          },
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 }

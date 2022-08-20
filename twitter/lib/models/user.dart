@@ -1,28 +1,67 @@
 class User {
-  String? uid;
-  String? email;
-  String? firstName;
-  String? secondName;
+  String key;
+  String userID;
+  String email;
+  String userName;
+  String displayName;
+  String imageUrl;
+  int followers;
+  int following;
+  List<String>? followersList;
+  List<String>? followingList;
 
-  User({this.uid, this.email, this.firstName, this.secondName});
+  User(
 
-  // receiving data from server
-  factory User.fromMap(map) {
-    return User(
-      uid: map['uid'],
-      email: map['email'],
-      firstName: map['firstName'],
-      secondName: map['secondName'],
-    );
-  }
+      this.key,
+      this.userID,
+      this.email,
+      this.userName,
+      this.displayName,
+      this.imageUrl,
+      this.followers,
+      this.following,
+      this.followersList,
+      this.followingList,
 
-  // sending data to our server
-  Map<String, dynamic> toMap() {
-    return {
-      'uid': uid,
-      'email': email,
-      'firstName': firstName,
-      'secondName': secondName,
-    };
-  }
+  );
+
+  User.fromJson(Map<dynamic, dynamic> map)
+      : key = map['key'],
+        userID = map['userID'],
+        email = map['email'],
+        userName = map['userName'],
+        displayName = map['displayName'],
+        imageUrl = map['imageUrl'],
+        followers = map['followers'],
+        following = map['following'],
+        followersList = map['followersList'],
+        followingList = map['followingList'];
+
+  Map<String, dynamic> toJson() => {
+    'key': key,
+    'userID': userID,
+    'email': email,
+    'userName': userName,
+    'displayName': displayName,
+    'imageUrl': imageUrl,
+    'followers': followers,
+    'following': following,
+    'followersList': followersList,
+    'followingList': followingList,
+  };
 }
+
+// factory User.fromJson(Map<dynamic, dynamic> map) {
+//   return User(
+//       key: map['key'],
+//       userID: map['userID'],
+//       email: map['email'],
+//       userName: map['userName'],
+//       displayName: map['displayName'],
+//       imageUrl: map['imageUrl'],
+//       followers: map['followers'],
+//       following: map['following'],
+//       followersList: map['followersList'],
+//       followingList: map['followingList'],
+//   );
+// }

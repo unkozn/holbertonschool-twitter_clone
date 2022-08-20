@@ -37,16 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
             isVerified: postList[index]['isVerified'],
           );
         },
-      )),
-      // body: const PostWidget(
-      //     imgUrl:
-      //     'http://www.bbk.ac.uk/mce/wp-content/uploads/2015/03/8327142885_9b447935ff.jpg',
-      //     name: "red",
-      //     userName: '@Reedxx',
-      //     post:
-      //     'or now just focus on how the widget should look and don’t worry about the class attributes because when we are going to build the backend we will start using models instead of passing every single field by itself.',
-      //     tag: 'Motivation'
-      // ),
+      ),
+      ),
     );
   }
 }
