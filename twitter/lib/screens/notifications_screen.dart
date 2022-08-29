@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../providers/auth_state.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -9,8 +10,28 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
+
+  @override
+  void initState() {
+
+    super.initState();
+    getAsync();
+  }
+
+  var user;
+
+  Future<void> getAsync() async {
+    try {
+      user = await Auth().getCurrentUserModel();
+    } catch (e) {
+      print(e);
+    }
+    if (mounted) setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (user == null) return const Center(child: CircularProgressIndicator());
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
@@ -21,8 +42,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           child: CircleAvatar(
             maxRadius: 10,
             // ignore: prefer_const_constructors
-            backgroundImage: NetworkImage(
-                'http://www.bbk.ac.uk/mce/wp-content/uploads/2015/03/8327142885_9b447935ff.jpg'),
+            backgroundImage: NetworkImage(user.imageUrl),
           ),
         ),
         elevation: 0,

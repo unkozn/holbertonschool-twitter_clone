@@ -1,12 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:twitter/screens/edit_post_screen.dart';
-import 'package:twitter/screens/edit_profile_screen.dart';
 import 'package:twitter/widgets/side_bar_menu.dart';
-import 'package:twitter/widgets/bottom_bar_menu.dart';
 import 'package:twitter/widgets/post_widget.dart';
-//import '../assets/post_list.dart';
 import '../providers/auth_state.dart';
 import '../models/post.dart';
 
@@ -30,7 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> getAsync() async {
     try {
       auth = await Auth().getCurrentUserModel();
-      print(auth.displayName);
     } catch (e) {
       print(e);
     }
@@ -64,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
           if (snapshot.data == null || snapshot.data == []) {
             return Center(
               child: Text(
-                'There is no post yet.',
+                'There is no posts yet.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,

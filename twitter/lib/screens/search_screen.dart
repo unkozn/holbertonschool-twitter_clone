@@ -13,6 +13,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   late TextEditingController _searchcontroller = TextEditingController();
+
   @override
   void initState() {
     _searchcontroller = _searchcontroller;
@@ -23,7 +24,6 @@ class _SearchScreenState extends State<SearchScreen> {
   User? user;
 
   Future<void> getAsync() async {
-    //print(userList);
     try {
       user = await Auth().getCurrentUserModel();
     } catch (e) {

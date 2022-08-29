@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:twitter/providers/auth_state.dart';
 import '../models/post.dart';
 import '../models/user.dart';
+import '../screens/profile_screen.dart';
 
 class PostWidget extends StatefulWidget {
   final Post post;
@@ -54,43 +55,69 @@ class _PostWidgetState extends State<PostWidget> {
 
     return ListTile(
       leading: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          CircleAvatar(
-            backgroundImage: NetworkImage(user.imageUrl),
+          SizedBox(
+            child: InkWell(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen(userID: post.userID)),
+              ),
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(user.imageUrl),
+              ),
+            ),
           ),
         ],
       ),
       title: Row(
         children: [
-          Container(
-            margin: const EdgeInsets.fromLTRB(0, 5, 5, 5),
-            child:
-            Text(
-              user.displayName,
-              style: GoogleFonts.raleway(
-                fontWeight: FontWeight.w800,
-                fontSize: 16,
-                color: Colors.black,
+          SizedBox(
+            height: 20,
+            child: InkWell(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen(userID: post.userID)),
               ),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  user.displayName,
+                  textAlign: TextAlign.left,
+                  style: GoogleFonts.raleway(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+
             ),
           ),
           Container(
             margin: const EdgeInsets.fromLTRB(0, 5, 5, 5),
-            child:
-            Icon(
-              Icons.verified_rounded,
-              size: 15,
-              color: user.isVerified ? Colors.lightBlue : Colors.transparent,
-            ),
+            child: user.isVerified ?
+              Row(
+                children: [
+                  const SizedBox(width: 5),
+                  Icon(
+                    Icons.verified_rounded,
+                    size: 10,
+                    color: user.isVerified ? Colors.lightBlue : Colors.transparent,
+                  ),
+                ],
+              ) :
+              const SizedBox(width: 1),
           ),
           Container(
             margin: const EdgeInsets.fromLTRB(0, 5, 5, 5),
             child: Text(
               '@${user.userName}',
               style: GoogleFonts.raleway(
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w500,
                 fontSize: 13,
-                color: Colors.grey,
+                color: Colors.grey.shade600,
               ),
             ),
           ),
@@ -129,7 +156,7 @@ class _PostWidgetState extends State<PostWidget> {
                 margin: const EdgeInsets.fromLTRB(5, 5, 0, 5),
                 child:
                 Icon(
-                  Icons.loop_outlined,
+                  Icons.repeat_rounded,
                   size: 18,
                   color: Colors.grey.shade400,
                 ),
@@ -152,7 +179,6 @@ class _PostWidgetState extends State<PostWidget> {
                               isLiked = true;
                             });
                           });
-
                         } else {
                           Post().delPostLike(post, auth.userID).then((_) {
                             setState(() {
@@ -166,7 +192,7 @@ class _PostWidgetState extends State<PostWidget> {
                     );
                   },
                   icon: Icon(
-                    Icons.heart_broken_rounded,
+                    Icons.favorite,
                     color: isLiked ? Colors.red : Colors.grey.shade400,
                     size: 18,
                   ),
