@@ -3,6 +3,7 @@ import 'package:twitter/main.dart';
 import 'package:twitter/screens/signin_screen.dart';
 import '../models/user.dart';
 import '../providers/auth_state.dart';
+import '../screens/profile_screen.dart';
 
 class SideBarMenu extends StatefulWidget {
   const SideBarMenu({super.key});
@@ -22,36 +23,35 @@ class _SideBarMenuState extends State<SideBarMenu> {
   User? user;
 
   Future<void> getAsync() async {
-
     try {
       user = await Auth().getCurrentUserModel();
     } catch (e) {
       print(e);
     }
-
     if (mounted) setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    if (user == null) return Center(child: CircularProgressIndicator());
-    else {
+    if (user == null) {
+      return Center(child: CircularProgressIndicator());
+    } else {
       return Drawer(
         child: ListView(
           children: [
             Column(
               children: [
                 DrawerHeader(
-                  //padding: const EdgeInsets.all(10),
                   child: Align(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Container(
                           alignment: AlignmentDirectional.topStart,
-                          child: const CircleAvatar(
+                          child: CircleAvatar(
                               backgroundImage: NetworkImage(
-                                  'https://external-preview.redd.it/h_bEzTX4zcSf5IWJtLMk5OQWRxZ2mhVCMdLfN7AcTLQ.jpg?auto=webp&s=41ec412012b9b51203c15025cc9ef49872bc9287'),
+                                  user!.imageUrl
+                              ),
                               radius: 30.0,
                             ),
 
@@ -72,7 +72,7 @@ class _SideBarMenuState extends State<SideBarMenu> {
                           margin: EdgeInsets.only(top: 2),
                           alignment: AlignmentDirectional.topStart,
                           child: Text(
-                            user!.userName,
+                            '@${user!.userName}',
                             style: TextStyle(
                               color: Colors.grey.shade400,
                               fontSize: 17,
@@ -118,7 +118,12 @@ class _SideBarMenuState extends State<SideBarMenu> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfileScreen(userID: user!.userID)),
+                );
+              },
             ),
             ListTile(
               leading: const Icon(Icons.list),

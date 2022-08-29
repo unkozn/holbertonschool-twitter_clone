@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as f;
 import 'package:flutter/material.dart';
-import 'package:twitter/models/user.dart';
-import 'package:twitter/widgets/showSnackbar.dart';
+import '../models/user.dart';
 
 enum Errors {none, matchError, weakError, existsError, error, wrongError, noUserError}
 
@@ -20,8 +19,6 @@ class Auth extends ChangeNotifier {
     toFirestore: (user, _) => user.toJson(),
   );
 
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
-
   Future attemptSignUp({
     required String email,
     required String name,
@@ -36,18 +33,15 @@ class Auth extends ChangeNotifier {
         email: email,
         password: password,
       );
-     return users.add({
-        'key': '',
-        'userID': userCredential.user?.uid,
-        'email': email,
-        'userName': '@${name}Holberton',
-        'displayName': name,
-        'imageUrl': '',
-        'followers': 0,
-        'following': 0,
-      })
-         .then((value) => Errors.none)
-         .catchError((error) => Errors.error);
+      return usersRef.add(
+        User(
+          userID: userCredential.user!.uid,
+          email: email,
+          userName: '@${name}Holberton',
+          displayName: name,
+        )
+      ).then((value) => Errors.none)
+       .catchError((error) => Errors.error);
     } on f.FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return Errors.weakError;
@@ -95,4 +89,6 @@ class Auth extends ChangeNotifier {
     }
     return {} as User;
   }
+
+
 }

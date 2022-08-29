@@ -63,29 +63,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       ),
                     ),
                   ),
-                  // const SizedBox(
-                  //   height: 20,
-                  // ),
-                  // Center(
-                  //   child: Text(
-                  //     "when new notification found,they'll show up ",
-                  //     style: GoogleFonts.mulish(
-                  //       color: Colors.grey.shade500,
-                  //       fontWeight: FontWeight.w700,
-                  //       fontSize: 15,
-                  //     ),
-                  //   ),
-                  // ),
-                  // Center(
-                  //   child: Text(
-                  //     "here",
-                  //     style: GoogleFonts.mulish(
-                  //       color: Colors.grey.shade500,
-                  //       fontWeight: FontWeight.w700,
-                  //       fontSize: 15,
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             ),

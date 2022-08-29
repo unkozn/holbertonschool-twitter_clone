@@ -1,46 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:twitter/providers/auth_state.dart';
+import '../models/post.dart';
+import '../models/user.dart';
 
-class PostWidget extends StatelessWidget {
-  final String name;
-  final String username;
-  final String post;
-  final String imgUrl;
-  final bool isVerified;
+class PostWidget extends StatefulWidget {
+  final Post post;
+  const PostWidget({Key? key, required this.post}) : super(key: key);
 
-  const PostWidget({
-    super.key,
-    required this.name,
-    required this.username,
-    required this.post,
-    required this.imgUrl,
-    required this.isVerified,
-  });
+  @override
+  State<PostWidget> createState() => _PostWidgetState();
+}
+
+class _PostWidgetState extends State<PostWidget> {
+
+  var user;
+  var auth;
+  bool isLiked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getAsync();
+  }
+
+  Future<void> getAsync() async {
+    try {
+      user = await User().getUserByID(widget.post.userID);
+      auth = await Auth().getCurrentUserModel();
+
+    } catch (e) {
+      print(e);
+    }
+    if (mounted) setState(() {});
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    if (user == null || auth == null) {
+      return Center(
+          child: Container(
+            height: 30,
+            width: 30,
+            margin: const EdgeInsets.symmetric(vertical: 50),
+            child: const CircularProgressIndicator(),
+          )
+      );
+    }
+    final Post post = widget.post;
+
+    isLiked = post.likeList.contains(auth.userID) ? true : false;
+
     return ListTile(
       leading: Column(
         children: [
           CircleAvatar(
-            backgroundImage: NetworkImage(imgUrl),
+            backgroundImage: NetworkImage(user.imageUrl),
           ),
         ],
       ),
       title: Row(
-        //mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             margin: const EdgeInsets.fromLTRB(0, 5, 5, 5),
             child:
-              Text(
-                name,
-                style: GoogleFonts.raleway(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 16,
-                  color: Colors.black,
-                ),
+            Text(
+              user.displayName,
+              style: GoogleFonts.raleway(
+                fontWeight: FontWeight.w800,
+                fontSize: 16,
+                color: Colors.black,
               ),
+            ),
           ),
           Container(
             margin: const EdgeInsets.fromLTRB(0, 5, 5, 5),
@@ -48,13 +80,13 @@ class PostWidget extends StatelessWidget {
             Icon(
               Icons.verified_rounded,
               size: 15,
-              color: isVerified ? Colors.lightBlue : Colors.transparent,
+              color: user.isVerified ? Colors.lightBlue : Colors.transparent,
             ),
           ),
           Container(
             margin: const EdgeInsets.fromLTRB(0, 5, 5, 5),
             child: Text(
-              username,
+              '@${user.userName}',
               style: GoogleFonts.raleway(
                 fontWeight: FontWeight.w400,
                 fontSize: 13,
@@ -66,12 +98,15 @@ class PostWidget extends StatelessWidget {
       ),
       subtitle: Column(
         children: [
-          Text(
-            post,
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 13,
-              color: Colors.black,
+          Container(
+            alignment: Alignment.topLeft,
+            child: Text(
+              post.text,
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 13,
+                color: Colors.black,
+              ),
             ),
           ),
           Row(
@@ -106,25 +141,49 @@ class PostWidget extends StatelessWidget {
               ),
               Container(
                 margin: const EdgeInsets.fromLTRB(5, 5, 0, 5),
-                child:
-                  Icon(
+                child: IconButton(
+                  onPressed: () {
+                    setState(
+                          () {
+                        if (!isLiked) {
+                          Post().setPostLike(post, auth.userID).then((_) {
+                            setState(() {
+                              post.likeCount++;
+                              isLiked = true;
+                            });
+                          });
+
+                        } else {
+                          Post().delPostLike(post, auth.userID).then((_) {
+                            setState(() {
+                              post.likeCount--;
+                              isLiked = false;
+                            });
+                          });
+
+                        }
+                      },
+                    );
+                  },
+                  icon: Icon(
                     Icons.heart_broken_rounded,
+                    color: isLiked ? Colors.red : Colors.grey.shade400,
                     size: 18,
-                    color: Colors.grey.shade400,
                   ),
+                ),
               ),
               Container(
-                width: 150,
+                transform: Matrix4.translationValues(-10.0, 0.0, 0.0),
+                width: 90,
                 margin: const EdgeInsets.fromLTRB(0, 5, 5, 5),
-                child:
-                  const Text('2'),
+                child: Text(post.likeCount.toString()),
               ),
               Container(
                 margin: const EdgeInsets.all(10),
                 alignment: AlignmentDirectional.topEnd,
                 child: Icon(
                   Icons.share,
-                  size: 18                                                           ,
+                  size: 18,
                   color: Colors.grey.shade400,
                 ),
               ),
@@ -144,5 +203,5 @@ class PostWidget extends StatelessWidget {
         ],
       ),
     );
-  }
-}
+    }
+    }
